@@ -20,7 +20,7 @@
     "require": {
         "illuminate/support": "~5.1",
         "php" : "~5.5|~7.0",
-        "dingo/api": "1.0.x@dev",
+        "dingo/api": "1.0.x",
         "teepluss/theme": "^2.0",
         "bosnadev/repositories": "0.*",
         "barryvdh/laravel-debugbar": "^2.2",
@@ -30,7 +30,7 @@
         "arrilot/laravel-widgets": "^3.3",
         "laracasts/utilities": "~2.0",
         "mcamara/laravel-localization": "1.1.*",
-        "barryvdh/laravel-translation-manager": "0.2.x-dev",
+        "barryvdh/laravel-translation-manager": "0.2.x",
         "kalnoy/nestedset": "^4.1"
     },
     "require-dev": {
