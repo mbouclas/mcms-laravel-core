@@ -1,0 +1,74 @@
+<?php
+
+namespace IdeaSeven\Core\Console\Commands;
+
+use Event;
+use Illuminate\Console\Command;
+use \Installer;
+
+
+class Install extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'core:install {provisionScript}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Installs the CMS';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $this->info('Beginning installation');
+        Event::listen('installer.package.run.before', function ($msg, $type = 'comment'){
+            $this->{$type}($msg);
+        });
+
+        Event::listen('installer.package.run.after', function ($msg, $type = 'comment'){
+            $this->{$type}($msg);
+        });
+
+        Installer::prepare()
+            ->execute($this->readProvisionScript($this->argument('provisionScript')));
+
+    }
+
+    /**
+     * Read a provision script and parse it to get module parameters
+     * @param string $provisionScript
+     */
+    private function readProvisionScript($provisionScript)
+    {
+        $data = \File::get($provisionScript);
+        $data = json_decode($data, true);
+        $args = [];
+        foreach ($data['packages'] as $package){
+            $args[$package['name']] = $package;
+        }
+
+        return $args;
+    }
+
+}
+

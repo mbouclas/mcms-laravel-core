@@ -1,0 +1,30 @@
+<?php
+
+namespace IdeaSeven\Core\StartUp;
+
+
+use IdeaSeven\Core\CoreServiceProvider;
+use Illuminate\Routing\Router;
+
+/**
+ * Class RegisterMiddleware
+ * @package IdeaSeven\Core\StartUp
+ */
+class RegisterMiddleware
+{
+
+    /**
+     * Register all your middleware here
+     * @param CoreServiceProvider $serviceProvider
+     * @param Router $router
+     */
+    public function handle(CoreServiceProvider $serviceProvider, Router $router)
+    {
+        $router->middleware('auth', \App\Http\Middleware\Authenticate::class);
+        $router->middleware('auth.basic', \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class);
+        $router->middleware('guest', \App\Http\Middleware\RedirectIfAuthenticated::class);
+        $router->middleware('role', \Bican\Roles\Middleware\VerifyRole::class);
+        $router->middleware('permission', \Bican\Roles\Middleware\VerifyPermission::class);
+        $router->middleware('level', \Bican\Roles\Middleware\VerifyLevel::class);
+    }
+}

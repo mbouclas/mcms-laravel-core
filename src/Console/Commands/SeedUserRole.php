@@ -1,0 +1,63 @@
+<?php
+
+namespace IdeaSeven\Core\Console\Commands;
+
+use Illuminate\Console\Command;
+use Bican\Roles\Models\Role;
+
+class SeedUserRole extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'core:seed:roles';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Seed the Roles table';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        Role::create([
+            'name' => 'Administrator',
+            'slug' => 'admin',
+            'description' => 'The admin user', // optional
+            'level' => 2, // optional, set to 1 by default
+        ]);
+
+        Role::create([
+            'name' => 'Super User',
+            'slug' => 'su',
+            'description' => 'The super user', // optional
+            'level' => 1, // optional, set to 1 by default
+        ]);
+
+        Role::create([
+            'name' => 'Moderator',
+            'slug' => 'moderator',
+            'description' => 'The moderator', // optional
+            'level' => 3, // optional, set to 1 by default
+        ]);
+
+    }
+}

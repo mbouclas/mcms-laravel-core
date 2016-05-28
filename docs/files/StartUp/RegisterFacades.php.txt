@@ -1,0 +1,37 @@
+<?php
+
+namespace IdeaSeven\Core\StartUp;
+
+use IdeaSeven\Core\Services\Installer\Install;
+use IdeaSeven\Core\CoreServiceProvider;
+use IdeaSeven\Core\Widgets\WidgetFacade;
+use IdeaSeven\Core\Widgets\Widget;
+use App;
+
+/**
+ * Register your Facades/aliases here
+ * Class RegisterFacades
+ * @package IdeaSeven\Core\StartUp
+ */
+class RegisterFacades
+{
+    /**
+     * @param CoreServiceProvider $serviceProvider
+     */
+    public function handle(CoreServiceProvider $serviceProvider)
+    {
+        //Instantiate the Installer facade
+        App::bind('Installer', function(){
+            return new Install();
+        });
+
+        //Instantiate the Widget facade
+        App::bind('Widget', function(){
+            return new Widget();
+        });
+
+        $facades = \Illuminate\Foundation\AliasLoader::getInstance();
+        $facades->alias('Installer', \IdeaSeven\Core\Facades\InstallerFacade::class);
+        $facades->alias('Widget', WidgetFacade::class);
+    }
+}

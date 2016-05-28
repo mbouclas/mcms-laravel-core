@@ -1,0 +1,17 @@
+<?php
+
+namespace IdeaSeven\Core\Presenters;
+use Laracodes\Presenter\Presenter;
+
+class UserPresenter extends Presenter
+{
+    public function fullName()
+    {
+        return $this->model->firstName . ' ' . $this->model->lastName;
+    }
+
+    public function accountAge()
+    {
+        return $this->model->created_at->diffForHumans();
+    }
+}
